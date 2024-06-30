@@ -6,4 +6,4 @@ NODEJS -> Stable v20.15.0
 Angular18 Base - ng serve		localhost:4200
 
 ### BackEnd
-NEST in src/nest - npm run start	localhost:3000
+NEST in src/nest - npm run start:dev	localhost:3000
