@@ -1,12 +1,31 @@
-import { Controller, Get } from '@nestjs/common';
-import { AppService } from './app.service';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { BooksSerivce } from './app.service';
+import { Book } from './FakeDatabase';
 
-@Controller()
-export class AppController {
-  constructor(private readonly appService: AppService) {}
+@Controller('books')
+export class BookController {
+  constructor(private readonly booksService: BooksSerivce) {}
 
+  // get all
   @Get()
-  getHello(): string {
-    return this.appService.getHello();
+  getAllBooks(): Book[] {
+    return this.booksService.getAllBooks();
   }
+
+  // get by id
+  @Get('getById/:id')
+  getBookById(@Param('id') id: string): Book | undefined {
+    const bookID = +id;
+    return this.booksService.findById(bookID);
+  }
+
+  // update
+  @Post('addbook')
+  addBook(@Body() book: Partial<Book>): Book {
+    const bookData = book;
+
+    if (!book.author || !book.title || !book.publicationYear) return undefined;
+    return this.booksService.createBook(bookData);
+  }
+
 }
